@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.zlf.config.RabbitConfig,\
+  com.zlf.config.ExchangeQueueConfig,\
+  com.zlf.starter.RabbitAutoConfiguration
