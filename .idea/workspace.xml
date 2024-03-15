@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f8b668e-ebe7-4572-9f33-6da21a614aa8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +47,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../es-spring-boot-start" />
+    <property name="last_opened_file_path" value="F:/my-project - gitee/rabbitmq-spring-boot-start" />
   </component>
   <component name="RebelAgentSelection">
     <selection>jr</selection>
@@ -90,6 +90,7 @@
       <option name="presentableId" value="Default" />
       <updated>1710048158472</updated>
       <workItem from="1710505520672" duration="1209000" />
+      <workItem from="1710514928017" duration="402000" />
     </task>
     <servers />
   </component>
@@ -97,10 +98,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="549" y="176" key="FileChooserDialogImpl" timestamp="1710505551151">
+    <state x="549" y="176" key="FileChooserDialogImpl" timestamp="1710515033831">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="549" y="176" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1710505551151" />
+    <state x="549" y="176" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1710515033831" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

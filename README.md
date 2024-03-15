@@ -181,3 +181,17 @@ zlf:
    4.4 配置可以实现延迟队列(普通设置delayed属性就变成延迟交换机 + 消息设置setHeader("x-delay", xxx))<br>
 5. rabbitmq-spring-boot-start配置使用手册<br>
    该使用手册在项目源码的resources目录下,可以参看该手册,写的也非常详细
+   
+6.文章
+
+https://blog.csdn.net/qq_34905631/article/details/127231242?spm=1001.2014.3001.5501
+
+https://mp.weixin.qq.com/s/vsRhFaCZin-MIlt3ihUBsQ
+
+https://blog.csdn.net/qq_34905631/article/details/136677232?spm=1001.2014.3001.5501
+
+https://mp.weixin.qq.com/s/-A9kuKHA5-4teKoVG0krOg
+
+https://blog.csdn.net/qq_34905631/article/details/136677368?spm=1001.2014.3001.5501
+
+https://mp.weixin.qq.com/s/-A9kuKHA5-4teKoVG0krOg
