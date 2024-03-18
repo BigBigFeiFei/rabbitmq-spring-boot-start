@@ -4,9 +4,9 @@ rabbitmq-spring-boot-start启动器<br>
 1. 项目中引入依赖如下：<br>
 ```
 <dependency>
-    <groupId>org.zlf</groupId>
+    <groupId>io.github.bigbigfeifei</groupId>
     <artifactId>rabbitmq-spring-boot-start</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 </dependency>
 ```        
 2. nacos配置如下：<br>
