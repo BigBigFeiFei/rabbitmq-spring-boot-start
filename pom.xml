@@ -28,8 +28,8 @@
     <url>https://github.com/BigBigFeiFei/rabbitmq-spring-boot-start</url>
     <scm>
         <url>https://github.com/BigBigFeiFei/rabbitmq-spring-boot-start</url>
-        <connection>scm:git:https://github.com/BigBigFeiFei/rabbitmq-spring-boot-start</connection>
-        <developerConnection>scm:git:https://github.com/BigBigFeiFei/rabbitmq-spring-boot-start</developerConnection>
+        <connection>scm:git:https://github.com/BigBigFeiFei/rabbitmq-spring-boot-start.git</connection>
+        <developerConnection>scm:git:https://github.com/BigBigFeiFei/rabbitmq-spring-boot-start.git</developerConnection>
     </scm>
 
     <developers>
