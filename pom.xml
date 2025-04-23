@@ -6,7 +6,7 @@
 
     <groupId>io.github.bigbigfeifei</groupId>
     <artifactId>rabbitmq-spring-boot-start</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <!--描述一定要有-->
     <description>rabbitmq启动器</description>
 
