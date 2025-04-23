@@ -168,7 +168,7 @@ public class RabbitService {
      * @param routingKey
      * @param msg
      */
-    public void sendMsg(RabbitTemplate rabbitTemplate, String exchangeName, String routingKey, String msg) {
+    public void sendMsg(RabbitTemplate rabbitTemplate, String exchangeName, String routingKey, Object msg) {
         this.checkRabbitTemplate(rabbitTemplate);
         this.checkParameter4(exchangeName, routingKey, msg);
         rabbitTemplate.convertAndSend(exchangeName, routingKey, msg);
@@ -182,7 +182,7 @@ public class RabbitService {
      * @param routingKey
      * @param msg
      */
-    public void sendMsg2(RabbitTemplate rabbitTemplate, String exchangeName, String routingKey, String msg) {
+    public void sendMsg2(RabbitTemplate rabbitTemplate, String exchangeName, String routingKey, Object msg) {
         this.checkRabbitTemplate(rabbitTemplate);
         this.checkParameter4(exchangeName, routingKey, msg);
         //消息ID
@@ -198,7 +198,7 @@ public class RabbitService {
      * @param routingKey
      * @param msg
      */
-    public void sendMsg3(RabbitTemplate rabbitTemplate, String exchangeName, String routingKey, String msg, String msgId) {
+    public void sendMsg3(RabbitTemplate rabbitTemplate, String exchangeName, String routingKey, Object msg, String msgId) {
         this.checkRabbitTemplate(rabbitTemplate);
         this.checkParameter1(exchangeName, routingKey);
         this.checkParameter3(msg, msgId);
@@ -219,7 +219,7 @@ public class RabbitService {
      * @param msg
      * @param msgId
      */
-    public void sendMsg4(RabbitTemplate rabbitTemplate, String exchangeName, String routingKey, String msg, String msgId, String returnedMsg) {
+    public void sendMsg4(RabbitTemplate rabbitTemplate, String exchangeName, String routingKey, Object msg, String msgId, String returnedMsg) {
         this.checkRabbitTemplate(rabbitTemplate);
         this.checkParameter1(exchangeName, routingKey);
         this.checkParameter2(msg, msgId, returnedMsg);
@@ -230,14 +230,14 @@ public class RabbitService {
         rabbitTemplate.convertAndSend(exchangeName, routingKey, msg, correlationData);
     }
 
-    public void sendMsg5(RabbitTemplate rabbitTemplate, String exchangeName, String routingKey, String msg, CorrelationData correlationData) {
+    public void sendMsg5(RabbitTemplate rabbitTemplate, String exchangeName, String routingKey, Object msg, CorrelationData correlationData) {
         this.checkRabbitTemplate(rabbitTemplate);
         this.checkParameter5(exchangeName, routingKey, msg);
         this.checkParameter6(correlationData);
         rabbitTemplate.convertAndSend(exchangeName, routingKey, msg, correlationData);
     }
 
-    public void sendMsg6(Integer eqpsIndex, Integer eqsIndex, String msg) {
+    public void sendMsg6(Integer eqpsIndex, Integer eqsIndex, Object msg) {
         HashMap<String, Object> map = this.getMapByIndex(eqpsIndex, eqsIndex);
         RabbitTemplate rabbitTemplate = (RabbitTemplate) map.get("rabbitTemplate");
         String exchangeName = (String) map.get("exchangeName");
@@ -245,7 +245,7 @@ public class RabbitService {
         this.sendMsg(rabbitTemplate, exchangeName, routingKey, msg);
     }
 
-    public void sendMsg7(Integer eqpsIndex, Integer eqsIndex, String msg) {
+    public void sendMsg7(Integer eqpsIndex, Integer eqsIndex, Object msg) {
         HashMap<String, Object> map = this.getMapByIndex(eqpsIndex, eqsIndex);
         RabbitTemplate rabbitTemplate = (RabbitTemplate) map.get("rabbitTemplate");
         String exchangeName = (String) map.get("exchangeName");
@@ -253,7 +253,7 @@ public class RabbitService {
         this.sendMsg2(rabbitTemplate, exchangeName, routingKey, msg);
     }
 
-    public void sendMsg8(Integer eqpsIndex, Integer eqsIndex, String msg, String msgId) {
+    public void sendMsg8(Integer eqpsIndex, Integer eqsIndex, Object msg, String msgId) {
         HashMap<String, Object> map = this.getMapByIndex(eqpsIndex, eqsIndex);
         RabbitTemplate rabbitTemplate = (RabbitTemplate) map.get("rabbitTemplate");
         String exchangeName = (String) map.get("exchangeName");
@@ -261,7 +261,7 @@ public class RabbitService {
         this.sendMsg3(rabbitTemplate, exchangeName, routingKey, msg, msgId);
     }
 
-    public void sendMsg9(Integer eqpsIndex, Integer eqsIndex, String msg, String msgId, String returnedMsg) {
+    public void sendMsg9(Integer eqpsIndex, Integer eqsIndex, Object msg, String msgId, String returnedMsg) {
         HashMap<String, Object> map = this.getMapByIndex(eqpsIndex, eqsIndex);
         RabbitTemplate rabbitTemplate = (RabbitTemplate) map.get("rabbitTemplate");
         String exchangeName = (String) map.get("exchangeName");
@@ -269,7 +269,7 @@ public class RabbitService {
         this.sendMsg4(rabbitTemplate, exchangeName, routingKey, msg, msgId, returnedMsg);
     }
 
-    public void sendMsg10(Integer eqpsIndex, Integer eqsIndex, String msg, CorrelationData correlationData) {
+    public void sendMsg10(Integer eqpsIndex, Integer eqsIndex, Object msg, CorrelationData correlationData) {
         HashMap<String, Object> map = this.getMapByIndex(eqpsIndex, eqsIndex);
         RabbitTemplate rabbitTemplate = (RabbitTemplate) map.get("rabbitTemplate");
         String exchangeName = (String) map.get("exchangeName");
@@ -299,7 +299,7 @@ public class RabbitService {
      * @param msg
      * @param time
      */
-    public void sendDelayed(RabbitTemplate rabbitTemplate, String exchangeName, String routingKey, String msg, long time) {
+    public void sendDelayed(RabbitTemplate rabbitTemplate, String exchangeName, String routingKey, Object msg, long time) {
         this.checkRabbitTemplate(rabbitTemplate);
         this.checkParameter7(exchangeName, routingKey, msg, time);
         rabbitTemplate.convertAndSend(exchangeName, routingKey, msg, message -> {
@@ -311,7 +311,7 @@ public class RabbitService {
         });
     }
 
-    public void sendDelayed2(RabbitTemplate rabbitTemplate, String exchangeName, String routingKey, String msg, long time) {
+    public void sendDelayed2(RabbitTemplate rabbitTemplate, String exchangeName, String routingKey, Object msg, long time) {
         this.checkRabbitTemplate(rabbitTemplate);
         this.checkParameter7(exchangeName, routingKey, msg, time);
         //消息ID
@@ -325,7 +325,7 @@ public class RabbitService {
         }, correlationData);
     }
 
-    public void sendDelayed3(RabbitTemplate rabbitTemplate, String exchangeName, String routingKey, String msg, long time, String msgId) {
+    public void sendDelayed3(RabbitTemplate rabbitTemplate, String exchangeName, String routingKey, Object msg, long time, String msgId) {
         this.checkRabbitTemplate(rabbitTemplate);
         this.checkParameter10(exchangeName, routingKey, msg, time, msgId);
         //消息ID
@@ -339,7 +339,7 @@ public class RabbitService {
         }, correlationData);
     }
 
-    public void sendDelayed4(RabbitTemplate rabbitTemplate, String exchangeName, String routingKey, String msg, long time, String msgId, String returnedMsg) {
+    public void sendDelayed4(RabbitTemplate rabbitTemplate, String exchangeName, String routingKey, Object msg, long time, String msgId, String returnedMsg) {
         this.checkRabbitTemplate(rabbitTemplate);
         this.checkParameter8(exchangeName, routingKey, msg, time, msgId, returnedMsg);
         //消息ID
@@ -355,7 +355,7 @@ public class RabbitService {
         }, correlationData);
     }
 
-    public void sendDelayed5(RabbitTemplate rabbitTemplate, String exchangeName, String routingKey, String msg, long time, CorrelationData correlationData) {
+    public void sendDelayed5(RabbitTemplate rabbitTemplate, String exchangeName, String routingKey, Object msg, long time, CorrelationData correlationData) {
         this.checkRabbitTemplate(rabbitTemplate);
         this.checkParameter6(correlationData);
         this.checkParameter9(exchangeName, routingKey, msg, time, correlationData);
@@ -369,7 +369,7 @@ public class RabbitService {
         }, correlationData);
     }
 
-    public void sendDelayed6(Integer eqpsIndex, Integer eqsIndex, String msg, long time) {
+    public void sendDelayed6(Integer eqpsIndex, Integer eqsIndex, Object msg, long time) {
         HashMap<String, Object> map = this.getMapByIndex(eqpsIndex, eqsIndex);
         RabbitTemplate rabbitTemplate = (RabbitTemplate) map.get("rabbitTemplate");
         String exchangeName = (String) map.get("exchangeName");
@@ -377,7 +377,7 @@ public class RabbitService {
         this.sendDelayed(rabbitTemplate, exchangeName, routingKey, msg, time);
     }
 
-    public void sendDelayed7(Integer eqpsIndex, Integer eqsIndex, String msg, long time) {
+    public void sendDelayed7(Integer eqpsIndex, Integer eqsIndex, Object msg, long time) {
         HashMap<String, Object> map = this.getMapByIndex(eqpsIndex, eqsIndex);
         RabbitTemplate rabbitTemplate = (RabbitTemplate) map.get("rabbitTemplate");
         String exchangeName = (String) map.get("exchangeName");
@@ -385,7 +385,7 @@ public class RabbitService {
         this.sendDelayed2(rabbitTemplate, exchangeName, routingKey, msg, time);
     }
 
-    public void sendDelayed8(Integer eqpsIndex, Integer eqsIndex, String msg, long time, String msgId) {
+    public void sendDelayed8(Integer eqpsIndex, Integer eqsIndex, Object msg, long time, String msgId) {
         HashMap<String, Object> map = this.getMapByIndex(eqpsIndex, eqsIndex);
         RabbitTemplate rabbitTemplate = (RabbitTemplate) map.get("rabbitTemplate");
         String exchangeName = (String) map.get("exchangeName");
@@ -442,7 +442,7 @@ public class RabbitService {
         return rabbitTemplate;
     }
 
-    public void sendDelayed9(Integer eqpsIndex, Integer eqsIndex, String msg, long time, String msgId, String returnedMsg) {
+    public void sendDelayed9(Integer eqpsIndex, Integer eqsIndex, Object msg, long time, String msgId, String returnedMsg) {
         HashMap<String, Object> map = this.getMapByIndex(eqpsIndex, eqsIndex);
         RabbitTemplate rabbitTemplate = (RabbitTemplate) map.get("rabbitTemplate");
         String exchangeName = (String) map.get("exchangeName");
@@ -450,7 +450,7 @@ public class RabbitService {
         this.sendDelayed4(rabbitTemplate, exchangeName, routingKey, msg, time, msgId, returnedMsg);
     }
 
-    public void sendDelayed10(Integer eqpsIndex, Integer eqsIndex, String msg, long time, CorrelationData correlationData) {
+    public void sendDelayed10(Integer eqpsIndex, Integer eqsIndex, Object msg, long time, CorrelationData correlationData) {
         HashMap<String, Object> map = this.getMapByIndex(eqpsIndex, eqsIndex);
         RabbitTemplate rabbitTemplate = (RabbitTemplate) map.get("rabbitTemplate");
         String exchangeName = (String) map.get("exchangeName");
@@ -598,8 +598,8 @@ public class RabbitService {
         }
     }
 
-    private void checkParameter2(String msg, String msgId, String returnedMsg) {
-        if (StringUtils.isEmpty(msg)) {
+    private void checkParameter2(Object msg, String msgId, String returnedMsg) {
+        if (Objects.isNull(msg)) {
             throw new RuntimeException("msg不为空");
         }
         if (StringUtils.isEmpty(msgId)) {
@@ -610,8 +610,8 @@ public class RabbitService {
         }
     }
 
-    private void checkParameter3(String msg, String msgId) {
-        if (StringUtils.isEmpty(msg)) {
+    private void checkParameter3(Object msg, String msgId) {
+        if (Objects.isNull(msg)) {
             throw new RuntimeException("msg不为空");
         }
         if (StringUtils.isEmpty(msgId)) {
@@ -619,26 +619,26 @@ public class RabbitService {
         }
     }
 
-    private void checkParameter4(String exchangeName, String routingKey, String msg) {
+    private void checkParameter4(String exchangeName, String routingKey, Object msg) {
         if (StringUtils.isEmpty(exchangeName)) {
             throw new RuntimeException("exchangeName不为空");
         }
         if (StringUtils.isEmpty(routingKey)) {
             throw new RuntimeException("routingKey不为空");
         }
-        if (StringUtils.isEmpty(msg)) {
+        if (Objects.isNull(msg)) {
             throw new RuntimeException("msg不为空");
         }
     }
 
-    private void checkParameter5(String exchangeName, String queueName, String msg) {
+    private void checkParameter5(String exchangeName, String queueName, Object msg) {
         if (StringUtils.isEmpty(exchangeName)) {
             throw new RuntimeException("exchangeName不为空");
         }
         if (StringUtils.isEmpty(queueName)) {
             throw new RuntimeException("queueName不为空");
         }
-        if (StringUtils.isEmpty(msg)) {
+        if (Objects.isNull(msg)) {
             throw new RuntimeException("msg不为空");
         }
     }
@@ -649,14 +649,14 @@ public class RabbitService {
         }
     }
 
-    private void checkParameter7(String exchangeName, String routingKey, String msg, long time) {
+    private void checkParameter7(String exchangeName, String routingKey, Object msg, long time) {
         if (StringUtils.isEmpty(exchangeName)) {
             throw new RuntimeException("exchangeName不为空");
         }
         if (StringUtils.isEmpty(routingKey)) {
             throw new RuntimeException("routingKey不为空");
         }
-        if (StringUtils.isEmpty(msg)) {
+        if (Objects.isNull(msg)) {
             throw new RuntimeException("msg不为空");
         }
         if (Objects.isNull(time)) {
@@ -667,7 +667,7 @@ public class RabbitService {
         }
     }
 
-    private void checkParameter8(String exchangeName, String routingKey, String msg, long time, String msgId, String returnedMsg) {
+    private void checkParameter8(String exchangeName, String routingKey, Object msg, long time, String msgId, String returnedMsg) {
         this.checkParameter7(exchangeName, routingKey, msg, time);
         if (StringUtils.isEmpty(msgId)) {
             throw new RuntimeException("msgId不为空");
@@ -677,12 +677,12 @@ public class RabbitService {
         }
     }
 
-    private void checkParameter9(String exchangeName, String routingKey, String msg, long time, CorrelationData correlationData) {
+    private void checkParameter9(String exchangeName, String routingKey, Object msg, long time, CorrelationData correlationData) {
         this.checkParameter7(exchangeName, routingKey, msg, time);
         this.checkParameter6(correlationData);
     }
 
-    private void checkParameter10(String exchangeName, String routingKey, String msg, long time, String msgId) {
+    private void checkParameter10(String exchangeName, String routingKey, Object msg, long time, String msgId) {
         this.checkParameter7(exchangeName, routingKey, msg, time);
         if (StringUtils.isEmpty(msgId)) {
             throw new RuntimeException("msgId不为空");
