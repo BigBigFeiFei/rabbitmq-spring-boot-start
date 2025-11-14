@@ -10,6 +10,8 @@ public interface ZlfMqRegistrarBeanNamePrefix {
 
     String simpleRabbitListenerContainerFactory = "org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory";
 
+    String directRabbitListenerContainerFactory = "org.springframework.amqp.rabbit.config.DirectRabbitListenerContainerFactory";
+
     String rabbitService = "rabbitService";
 
 }

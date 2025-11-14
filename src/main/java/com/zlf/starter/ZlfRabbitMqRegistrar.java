@@ -28,6 +28,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.amqp.core.AbstractExchange;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.config.AbstractRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.config.DirectRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.config.RetryInterceptorBuilder;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
@@ -41,13 +42,10 @@ import org.springframework.amqp.rabbit.retry.RepublishMessageRecoverer;
 import org.springframework.amqp.rabbit.support.ValueExpression;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.beans.factory.config.ConstructorArgumentValues;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -228,32 +226,42 @@ public class ZlfRabbitMqRegistrar implements ImportBeanDefinitionRegistrar, Envi
             if (ContainerType.SIMPLE.equals(type)) {
                 Map<String, String> errorExchangeQueueRelationship = this.createErrorExchangeQueueRelationship(String.valueOf(i), rabbitService, rabbitAdmin);
                 SimpleContainer simple = rps.get(i).getListener().getSimple();
-                ConstructorArgumentValues cas3 = new ConstructorArgumentValues();
-                MutablePropertyValues values3 = new MutablePropertyValues();
-                this.getAmqpContainer(simple, values3, cachingConnectionFactory, jackson2JsonMessageConverter, rabbitTemplate, errorExchangeQueueRelationship);
+                //ConstructorArgumentValues cas3 = new ConstructorArgumentValues();
+                //MutablePropertyValues values3 = new MutablePropertyValues();
+                SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory = new SimpleRabbitListenerContainerFactory();
+                this.setRabbitListenerContainerFactoryProperty(simple, simpleRabbitListenerContainerFactory, cachingConnectionFactory, jackson2JsonMessageConverter, rabbitTemplate, errorExchangeQueueRelationship);
                 if (Objects.nonNull(simple.getConcurrency())) {
-                    values3.add("concurrentConsumers", simple.getConcurrency());
+                    //values3.add("concurrentConsumers", simple.getConcurrency());
+                    simpleRabbitListenerContainerFactory.setConcurrentConsumers(simple.getConcurrency());
                 }
                 if (Objects.nonNull(simple.getMaxConcurrency())) {
-                    values3.add("maxConcurrentConsumers", simple.getMaxConcurrency());
+                    //values3.add("maxConcurrentConsumers", simple.getMaxConcurrency());
+                    simpleRabbitListenerContainerFactory.setMaxConcurrentConsumers(simple.getMaxConcurrency());
                 }
                 if (Objects.nonNull(simple.getBatchSize())) {
-                    values3.add("batchSize", simple.getBatchSize());
+                    //values3.add("batchSize", simple.getBatchSize());
+                    simpleRabbitListenerContainerFactory.setBatchSize(simple.getBatchSize());
                 }
-                RootBeanDefinition rootBeanDefinition3 = new RootBeanDefinition(SimpleRabbitListenerContainerFactory.class, cas3, values3);
-                beanDefinitionRegistry.registerBeanDefinition(SimpleRabbitListenerContainerFactory.class.getName() + i, rootBeanDefinition3);
+                //SimpleRabbitListenerContainerFactory这个没有构造器注入,所以做如下调整
+                //RootBeanDefinition rootBeanDefinition3 = new RootBeanDefinition(SimpleRabbitListenerContainerFactory.class, cas3, values3);
+                //beanDefinitionRegistry.registerBeanDefinition(SimpleRabbitListenerContainerFactory.class.getName() + i, rootBeanDefinition3);
+                ((ConfigurableBeanFactory) this.beanFactory).registerSingleton(SimpleRabbitListenerContainerFactory.class.getName() + i, simpleRabbitListenerContainerFactory);
                 log.info("zlf.SimpleRabbitListenerContainerFactory注册完成,beanName:{}", SimpleRabbitListenerContainerFactory.class.getName() + i);
             } else if (ContainerType.DIRECT.equals(type)) {
                 Map<String, String> errorExchangeQueueRelationship = this.createErrorExchangeQueueRelationship(String.valueOf(i), rabbitService, rabbitAdmin);
                 DirectContainer direct = rps.get(i).getListener().getDirect();
-                ConstructorArgumentValues cas4 = new ConstructorArgumentValues();
-                MutablePropertyValues values4 = new MutablePropertyValues();
-                this.getAmqpContainer(direct, values4, cachingConnectionFactory, jackson2JsonMessageConverter, rabbitTemplate, errorExchangeQueueRelationship);
+                //ConstructorArgumentValues cas4 = new ConstructorArgumentValues();
+                //MutablePropertyValues values4 = new MutablePropertyValues();
+                DirectRabbitListenerContainerFactory directRabbitListenerContainerFactory = new DirectRabbitListenerContainerFactory();
+                this.setRabbitListenerContainerFactoryProperty(direct, directRabbitListenerContainerFactory, cachingConnectionFactory, jackson2JsonMessageConverter, rabbitTemplate, errorExchangeQueueRelationship);
                 if (Objects.nonNull(direct.getConsumersPerQueue())) {
-                    values4.add("consumersPerQueue", direct.getConsumersPerQueue());
+                    //values4.add("consumersPerQueue", direct.getConsumersPerQueue());
+                    directRabbitListenerContainerFactory.setConsumersPerQueue(direct.getConsumersPerQueue());
                 }
-                RootBeanDefinition rootBeanDefinition4 = new RootBeanDefinition(DirectRabbitListenerContainerFactory.class, cas4, values4);
-                beanDefinitionRegistry.registerBeanDefinition(DirectRabbitListenerContainerFactory.class.getName() + i, rootBeanDefinition4);
+                //DirectRabbitListenerContainerFactory这个没有构造器注入,所以做如下调整
+                //RootBeanDefinition rootBeanDefinition4 = new RootBeanDefinition(DirectRabbitListenerContainerFactory.class, cas4, values4);
+                //beanDefinitionRegistry.registerBeanDefinition(DirectRabbitListenerContainerFactory.class.getName() + i, rootBeanDefinition4);
+                ((ConfigurableBeanFactory) this.beanFactory).registerSingleton(DirectRabbitListenerContainerFactory.class.getName() + i, directRabbitListenerContainerFactory);
                 log.info("zlf.DirectRabbitListenerContainerFactory注册完成,beanName:{}", DirectRabbitListenerContainerFactory.class.getName() + i);
             }
             //解析注册交换机、队列和绑定关系
@@ -406,23 +414,41 @@ public class ZlfRabbitMqRegistrar implements ImportBeanDefinitionRegistrar, Envi
         return resultMap;
     }
 
-    private void getAmqpContainer(AmqpContainer amqpContainer, MutablePropertyValues values, CachingConnectionFactory cachingConnectionFactory, Jackson2JsonMessageConverter jackson2JsonMessageConverter, RabbitTemplate rabbitTemplate, Map<String, String> errorExchangeQueueRelationship) {
-        values.add("connectionFactory", cachingConnectionFactory);
-        values.add("autoStartup", amqpContainer.isAutoStartup());
-        values.add("messageConverter", jackson2JsonMessageConverter);
+    /**
+     * 设置RabbitListenerContainerFactoryProperty相关属性
+     *
+     * @param amqpContainer
+     * @param abstractRabbitListenerContainerFactory
+     * @param cachingConnectionFactory
+     * @param jackson2JsonMessageConverter
+     * @param rabbitTemplate
+     * @param errorExchangeQueueRelationship
+     */
+    private void setRabbitListenerContainerFactoryProperty(AmqpContainer amqpContainer, AbstractRabbitListenerContainerFactory abstractRabbitListenerContainerFactory, CachingConnectionFactory cachingConnectionFactory, Jackson2JsonMessageConverter jackson2JsonMessageConverter, RabbitTemplate rabbitTemplate, Map<String, String> errorExchangeQueueRelationship) {
+        //values.add("connectionFactory", cachingConnectionFactory);
+        abstractRabbitListenerContainerFactory.setConnectionFactory(cachingConnectionFactory);
+        //values.add("autoStartup", amqpContainer.isAutoStartup());
+        abstractRabbitListenerContainerFactory.setAutoStartup(amqpContainer.isAutoStartup());
+        //values.add("messageConverter", jackson2JsonMessageConverter);
+        abstractRabbitListenerContainerFactory.setMessageConverter(jackson2JsonMessageConverter);
         if (Objects.nonNull(amqpContainer.getAcknowledgeMode())) {
-            values.add("acknowledgeMode", amqpContainer.getAcknowledgeMode());
+            //values.add("acknowledgeMode", amqpContainer.getAcknowledgeMode());
+            abstractRabbitListenerContainerFactory.setAcknowledgeMode(amqpContainer.getAcknowledgeMode());
         }
         if (Objects.nonNull(amqpContainer.getPrefetch())) {
-            values.add("prefetch", amqpContainer.getPrefetch());
+            //values.add("prefetch", amqpContainer.getPrefetch());
+            abstractRabbitListenerContainerFactory.setPrefetchCount(amqpContainer.getPrefetch());
         }
         if (Objects.nonNull(amqpContainer.getDefaultRequeueRejected())) {
-            values.add("defaultRequeueRejected", amqpContainer.getDefaultRequeueRejected());
+            //values.add("defaultRequeueRejected", amqpContainer.getDefaultRequeueRejected());
+            abstractRabbitListenerContainerFactory.setDefaultRequeueRejected(amqpContainer.getDefaultRequeueRejected());
         }
         if (Objects.nonNull(amqpContainer.getIdleEventInterval())) {
-            values.add("idleEventInterval", amqpContainer.getIdleEventInterval());
+            //values.add("idleEventInterval", amqpContainer.getIdleEventInterval());
+            abstractRabbitListenerContainerFactory.setIdleEventInterval(amqpContainer.getIdleEventInterval().toMillis());
         }
-        values.add("missingQueuesFatal", amqpContainer.isMissingQueuesFatal());
+        //values.add("missingQueuesFatal", amqpContainer.isMissingQueuesFatal());
+        abstractRabbitListenerContainerFactory.setMissingQueuesFatal(amqpContainer.isMissingQueuesFatal());
         ListenerRetry retry2 = amqpContainer.getRetry();
         if (retry2.isEnabled()) {
             RetryInterceptorBuilder<?, ?> builder = (retry2.isStateless()) ? RetryInterceptorBuilder.stateless()
@@ -450,7 +476,8 @@ public class ZlfRabbitMqRegistrar implements ImportBeanDefinitionRegistrar, Envi
             MessageRecoverer recoverer = new RepublishMessageRecoverer(rabbitTemplate, errorExchange, errorRoutingKey);
             log.info("zlf.MessageRecoverer.errorExchange:{},errorRoutingKey:{}", errorExchange, errorRoutingKey);
             builder.recoverer(recoverer);
-            values.add("adviceChain", builder.build());
+            //values.add("adviceChain", builder.build());
+            abstractRabbitListenerContainerFactory.setAdviceChain(builder.build());
         }
     }
 
